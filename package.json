@@ -1,0 +1,19 @@
+{
+  "name": "canvas-one",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --watch",
+    "build": "webpack"
+  },
+  "author": "okt17",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-loader": "^4.3.1",
+    "tslint": "^5.10.0",
+    "typescript": "^2.9.1",
+    "webpack": "^4.10.2",
+    "webpack-cli": "^3.0.2"
+  }
+}
