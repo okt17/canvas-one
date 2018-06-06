@@ -36,6 +36,21 @@ function mouseMove ( event: MouseEvent, drawer: CanvasDrawer ): void {
   }
 }
 
+const SPEED_DELIMETER = 32;
+
+function click ( event: MouseEvent, drawer: CanvasDrawer ): void {
+  const
+    x = event.clientX,
+    y = event.clientY;
+
+  for ( let i = 0; i < particles.length; ++i ) {
+    particles[i].setAcceleration(
+      Math.floor( ( x - particles[i].getX() ) / SPEED_DELIMETER ),
+      Math.floor( ( y - particles[i].getY() ) / SPEED_DELIMETER ),
+    );
+  }
+}
+
 const
   drawer = new CanvasDrawer(
     document.body.appendChild( document.createElement( 'canvas' ) ),
@@ -44,6 +59,7 @@ const
       fullScreen: true,
       tick,
       mouseMove,
+      click,
     },
   ),
   maxX = drawer.getWidth(),

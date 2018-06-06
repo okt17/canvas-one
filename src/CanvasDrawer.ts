@@ -8,6 +8,7 @@ type CanvasDrawerOptions = Partial<{
   cycleIntervalMS: number;
   tick ( drawer?: CanvasDrawer ): void;
   mouseMove ( event: MouseEvent, drawer?: CanvasDrawer ): void;
+  click ( event: MouseEvent, drawer?: CanvasDrawer ): void;
 }>;
 
 const DEFAULT_OPTIONS: CanvasDrawerOptions = {
@@ -35,6 +36,7 @@ class CanvasDrawer {
       cycleIntervalMS = DEFAULT_OPTIONS.cycleIntervalMS,
       tick,
       mouseMove,
+      click,
     }: CanvasDrawerOptions = DEFAULT_OPTIONS,
   ) {
     this.canvas = canvas;
@@ -42,18 +44,8 @@ class CanvasDrawer {
     this.mainColor = mainColor;
     this.backgroundColor = backgroundColor;
     this.cycleIntervalMS = cycleIntervalMS;
-    
-    if ( typeof tick === 'function' ) {
-      this.tickFunction = tick;
-      canvas.addEventListener( 'click', () => {
-        if ( this.cycleIntervalId !== undefined ) {
-          this.stopCycle();
-        }
-        else {
-          this.startCycle();
-        }
-      } );
-    }
+    this.tickFunction = tick;
+
 
     if ( fullScreen ) {
       window.addEventListener( 'resize', this.handleWindowResize );
@@ -66,7 +58,11 @@ class CanvasDrawer {
     if ( typeof mouseMove === 'function' ) {
       this.mouseMoveFunction = mouseMove;
       canvas.addEventListener( 'mousemove', this.handleMouseMove );
-    }    
+    }
+
+    if ( typeof click === 'function' ) {
+      canvas.addEventListener( 'click', click );
+    }
   }
   /*
     Using arrow function properties instead of class methods

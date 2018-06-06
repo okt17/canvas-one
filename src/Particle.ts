@@ -56,9 +56,15 @@ class Particle {
     this.x = x;
     this.y = y;
   };
+  setAcceleration = ( dx: number, dy: number ) => {
+    this.dx = dx;
+    this.dy = dy;
+  };
   getPositionHistory = () => this.positionHistory;
   getX = () => this.x;
   getY = () => this.y;
+  getDX = () => this.dx;
+  getDY = () => this.dy;
   getColor = () => this.color;
   static getRandomParticle (
     maxX: number,
