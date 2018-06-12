@@ -1,5 +1,4 @@
 import Particle from './Particle';
-import { getRandomColor } from './utils';
 
 type CanvasDrawerOptions = Partial<{
   backgroundColor: string;
@@ -101,15 +100,13 @@ class CanvasDrawer {
       history = particle.getPositionHistory(),
       color = particle.getColor();
 
-    let j: number;
-    for ( j = 0; j < history.length; ++j ) {
-      this.drawDot(
-        history[j].x,
-        history[j].y,
-        color,
-        j % 2 === 0 ? j / 2 : ( j + 1 ) / 2,
-      );
-    }
+    let j = 0;
+    history.forEach( ( { x, y } ) => this.drawDot(
+      x,
+      y,
+      color,
+      ++j % 2 === 0 ? j / 2 : ( j + 1 ) / 2 ),
+    );
 
     this.drawDot(
       particle.getX(),

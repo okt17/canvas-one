@@ -1,4 +1,5 @@
 import { getRandomColor } from './utils';
+import { Queue } from 'typescript-collections';
 
 class Particle {
   private x: number;
@@ -7,7 +8,7 @@ class Particle {
   private dy: number;
   private color: string;
   static POSITION_HISTORY_LENGTH = 10;
-  private positionHistory: { x: number, y: number }[] = [];
+  private positionHistory: Queue<{ x: number, y: number }> = new Queue();
   constructor (
     x: number,
     y: number,
@@ -22,13 +23,13 @@ class Particle {
     this.color = color;
   }
   tick = ( maxX = 500, maxY = 500, minX = 0, minY = 0 ) => {
-    this.positionHistory.push( {
+    this.positionHistory.enqueue( {
       x: this.x,
       y: this.y,
     } );
 
-    if ( this.positionHistory.length > Particle.POSITION_HISTORY_LENGTH ) {
-      this.positionHistory.shift();
+    if ( this.positionHistory.size() > Particle.POSITION_HISTORY_LENGTH ) {
+      this.positionHistory.dequeue();
     }
 
     if ( this.x < minX ) {
